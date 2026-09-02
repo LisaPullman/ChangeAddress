@@ -92,7 +92,7 @@
 
    <section class="contact-form-section">
     <h2>Send a Message</h2>
-    <form class="contact-form" onsubmit="return false">
+    <form class="contact-form" id="contactForm">
      <div class="form-row">
       <div class="form-group">
        <label for="name">Name <span class="required">*</span></label>
@@ -152,6 +152,41 @@ function rejectCookies(){document.getElementById("cookieBanner").classList.remov
   document.addEventListener("DOMContentLoaded",function(){
     var btn=document.getElementById("themeToggle");
     if(btn){btn.addEventListener("click",toggle)}
+  });
+})();
+</script>
+<script>
+/* Contact form: turn fields into a mailto link */
+(function(){
+  var form = document.getElementById('contactForm');
+  if(!form) return;
+  var LABEL = {
+    general: 'General Inquiry', bug: 'Bug Report', feature: 'Feature Request',
+    ads: 'Advertising', other: 'Other'
+  };
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var fd = new FormData(form);
+    var name    = (fd.get('name')    || '').toString().trim();
+    var email   = (fd.get('email')   || '').toString().trim();
+    var subjKey = (fd.get('subject') || 'general').toString();
+    var message = (fd.get('message') || '').toString().trim();
+    var lbl = LABEL[subjKey] || subjKey;
+    var subject = '[' + lbl + '] Message from ' + (name || 'Anonymous');
+    var body = [
+      'Name: '    + name,
+      'Email: '   + email,
+      'Topic: '   + lbl,
+      '',
+      'Message:',
+      message,
+      '',
+      '— Sent from c.qifei2035.eu.cc contact form'
+    ].join('\n');
+    var mailto = 'mailto:foxbobby@qq.com'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body='    + encodeURIComponent(body);
+    window.location.href = mailto;
   });
 })();
 </script><button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:&#39;smooth&#39;})" title="返回顶部">&#8593;</button><script>window.addEventListener('scroll',function(){document.getElementById('backToTop').classList.toggle('show',window.scrollY>300)})</script></body>

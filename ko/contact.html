@@ -93,7 +93,7 @@
 
    <section class="contact-form-section">
     <h2>메시지 보내기</h2>
-    <form class="contact-form" onsubmit="return false">
+    <form class="contact-form" id="contactForm">
      <div class="form-row">
       <div class="form-group">
        <label for="name">이름 <span class="required">*</span></label>
@@ -154,6 +154,41 @@ function rejectCookies(){document.getElementById("cookieBanner").classList.remov
   document.addEventListener("DOMContentLoaded",function(){
     var btn=document.getElementById("themeToggle");
     if(btn){btn.addEventListener("click",toggle)}
+  });
+})();
+</script>
+<script>
+/* 문의 양식: 필드를 mailto 링크로 변환 */
+(function(){
+  var form = document.getElementById('contactForm');
+  if(!form) return;
+  var LABEL = {
+    general: '일반 문의', bug: '버그 신고', feature: '기능 요청',
+    ads: '광고', other: '기타'
+  };
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var fd = new FormData(form);
+    var name    = (fd.get('name')    || '').toString().trim();
+    var email   = (fd.get('email')   || '').toString().trim();
+    var subjKey = (fd.get('subject') || 'general').toString();
+    var message = (fd.get('message') || '').toString().trim();
+    var lbl = LABEL[subjKey] || subjKey;
+    var subject = '[' + lbl + '] ' + (name || '익명') + '님의 메시지';
+    var body = [
+      '이름: '   + name,
+      '이메일: ' + email,
+      '주제: '   + lbl,
+      '',
+      '메시지:',
+      message,
+      '',
+      '— c.qifei2035.eu.cc 문의 양식에서 전송'
+    ].join('\n');
+    var mailto = 'mailto:foxbobby@qq.com'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body='    + encodeURIComponent(body);
+    window.location.href = mailto;
   });
 })();
 </script><button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:&#39;smooth&#39;})" title="返回顶部">&#8593;</button><script>window.addEventListener('scroll',function(){document.getElementById('backToTop').classList.toggle('show',window.scrollY>300)})</script></body>

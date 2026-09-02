@@ -93,7 +93,7 @@
 
    <section class="contact-form-section">
     <h2>メッセージを送信</h2>
-    <form class="contact-form" onsubmit="return false">
+    <form class="contact-form" id="contactForm">
      <div class="form-row">
       <div class="form-group">
        <label for="name">お名前 <span class="required">*</span></label>
@@ -154,6 +154,41 @@ function rejectCookies(){document.getElementById("cookieBanner").classList.remov
   document.addEventListener("DOMContentLoaded",function(){
     var btn=document.getElementById("themeToggle");
     if(btn){btn.addEventListener("click",toggle)}
+  });
+})();
+</script>
+<script>
+/* お問い合わせフォーム：フィールドを mailto リンクに変換 */
+(function(){
+  var form = document.getElementById('contactForm');
+  if(!form) return;
+  var LABEL = {
+    general: '一般的なお問い合わせ', bug: 'バグ報告', feature: '機能リクエスト',
+    ads: '広告掲載', other: 'その他'
+  };
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var fd = new FormData(form);
+    var name    = (fd.get('name')    || '').toString().trim();
+    var email   = (fd.get('email')   || '').toString().trim();
+    var subjKey = (fd.get('subject') || 'general').toString();
+    var message = (fd.get('message') || '').toString().trim();
+    var lbl = LABEL[subjKey] || subjKey;
+    var subject = '[' + lbl + '] ' + (name || '匿名') + ' 様からのメッセージ';
+    var body = [
+      'お名前: ' + name,
+      'メール: ' + email,
+      '件名: '   + lbl,
+      '',
+      'メッセージ:',
+      message,
+      '',
+      '— c.qifei2035.eu.cc のお問い合わせフォームから送信'
+    ].join('\n');
+    var mailto = 'mailto:foxbobby@qq.com'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body='    + encodeURIComponent(body);
+    window.location.href = mailto;
   });
 })();
 </script><button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:&#39;smooth&#39;})" title="返回顶部">&#8593;</button><script>window.addEventListener('scroll',function(){document.getElementById('backToTop').classList.toggle('show',window.scrollY>300)})</script></body>

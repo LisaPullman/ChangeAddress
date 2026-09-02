@@ -92,7 +92,7 @@
 
    <section class="contact-form-section">
     <h2>发送消息</h2>
-    <form class="contact-form" onsubmit="return false">
+    <form class="contact-form" id="contactForm">
      <div class="form-row">
       <div class="form-group">
        <label for="name">姓名 <span class="required">*</span></label>
@@ -152,6 +152,41 @@ function rejectCookies(){document.getElementById("cookieBanner").classList.remov
   document.addEventListener("DOMContentLoaded",function(){
     var btn=document.getElementById("themeToggle");
     if(btn){btn.addEventListener("click",toggle)}
+  });
+})();
+</script>
+<script>
+/* 联系表单：把字段拼成 mailto 提交，落到 footer 的官方邮箱 */
+(function(){
+  var form = document.getElementById('contactForm');
+  if(!form) return;
+  var SUBJECT_LABEL = {
+    general: '一般咨询', bug: '问题反馈', feature: '功能建议',
+    ads: '广告合作', other: '其他'
+  };
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var fd = new FormData(form);
+    var name    = (fd.get('name')    || '').toString().trim();
+    var email   = (fd.get('email')   || '').toString().trim();
+    var subjKey = (fd.get('subject') || 'general').toString();
+    var message = (fd.get('message') || '').toString().trim();
+    var subjLabel = SUBJECT_LABEL[subjKey] || subjKey;
+    var subject = '[' + subjLabel + '] 来自 ' + (name || '匿名') + ' 的消息';
+    var body = [
+      '姓名: ' + name,
+      '邮箱: ' + email,
+      '主题: ' + subjLabel,
+      '',
+      '消息:',
+      message,
+      '',
+      '— 来自 c.qifei2035.eu.cc 联系表单'
+    ].join('\n');
+    var mailto = 'mailto:foxbobby@qq.com'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body='    + encodeURIComponent(body);
+    window.location.href = mailto;
   });
 })();
 </script><button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:&#39;smooth&#39;})" title="返回顶部">&#8593;</button><script>window.addEventListener('scroll',function(){document.getElementById('backToTop').classList.toggle('show',window.scrollY>300)})</script></body>
