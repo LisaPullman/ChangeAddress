@@ -1,0 +1,12 @@
+# Cloudflare Pages — redirects & rewrites
+# https://developers.cloudflare.com/pages/configuration/redirects/
+
+# Force HTTPS (Pages already does this, but explicit is friendlier)
+/http://c.qifei2035.eu.cc/*  https://c.qifei2035.eu.cc/:splat  301
+
+# Optional: short alias for the homepage
+/c  /index.html  301
+
+# Fallback for unknown paths back to the homepage instead of 404
+# (this site has no true SPA, but it keeps users from bouncing on a typo)
+/*  /index.html  404

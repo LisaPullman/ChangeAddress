@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 40" role="img" aria-label="foxai">
+  <!-- Lockup: bare mark (currentColor) + wordmark, where "ai" picks up
+       var(--brand). Designed for navbars and auth surfaces. -->
+  <g transform="translate(0,0)">
+    <svg x="0" y="0" width="40" height="40" viewBox="0 0 64 64" overflow="visible">
+      <g fill="none" stroke="currentColor" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M23 55V22c0-7.2 5.8-13 13-13h2"/>
+        <path d="M12.5 31h21"/>
+      </g>
+      <circle cx="49" cy="9" r="5.5" fill="currentColor"/>
+    </svg>
+  </g>
+  <text x="50" y="28" font-family="ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="22" font-weight="600" letter-spacing="-0.01em" fill="currentColor">fox<tspan fill="#E2571F">ai</tspan></text>
+</svg>

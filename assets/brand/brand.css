@@ -1,0 +1,46 @@
+/* ============================================================
+   foxai brand tokens — single source of truth
+   see ../LOGO.html for the full implementation spec
+   ============================================================ */
+
+:root {
+  /* foxai brand palette (light mode) */
+  --brand: #E2571F;              /* Ember */
+  --brand-foreground: #FFFFFF;   /* mark fill on tile */
+  --brand-muted: rgba(226, 87, 31, 0.12);
+
+  /* Derived tokens — used by style.css */
+  --primary: var(--brand);
+  --primary-dark: #b9461a;       /* Ember darkened ~10% in OKLCH */
+  --primary-light: var(--brand-muted);
+
+  /* Slightly stronger ring for focus / hover */
+  --primary-ring: rgba(226, 87, 31, 0.18);
+}
+
+/* foxai brand palette (dark mode)
+   hue stays at ~39° in OKLCH; only lightness lifts. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --brand: #FF7A4D;
+    --brand-foreground: #1a1a1a;
+    --brand-muted: rgba(255, 122, 77, 0.16);
+
+    --primary: var(--brand);
+    --primary-dark: #e3643a;
+    --primary-light: var(--brand-muted);
+    --primary-ring: rgba(255, 122, 77, 0.25);
+  }
+}
+
+/* Force dark when user picked it explicitly */
+:root[data-theme="dark"] {
+  --brand: #FF7A4D;
+  --brand-foreground: #1a1a1a;
+  --brand-muted: rgba(255, 122, 77, 0.16);
+
+  --primary: var(--brand);
+  --primary-dark: #e3643a;
+  --primary-light: var(--brand-muted);
+  --primary-ring: rgba(255, 122, 77, 0.25);
+}

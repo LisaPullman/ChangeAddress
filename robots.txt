@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://c.qifei2035.eu.cc/sitemap.xml
