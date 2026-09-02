@@ -362,9 +362,11 @@ echo | openssl s_client -servername c.qifei2035.eu.cc -connect c.qifei2035.eu.cc
 
 # 3. 缓存头正确
 curl -I https://c.qifei2035.eu.cc/ | grep -i cache-control
-# → max-age=0
+# → max-age=0, must-revalidate
 curl -I https://c.qifei2035.eu.cc/style.css | grep -i cache-control
-# → max-age=31536000, immutable
+# → max-age=0, must-revalidate
+# （CSS/JS/SVG 当前走 must-revalidate：文件名不带 hash，避免用户拿到旧版；
+#  改成 ?v=2 或内容 hash 文件名后再切到 max-age=31536000, immutable）
 
 # 4. HTTPS 强制
 curl -I http://c.qifei2035.eu.cc/ | head -1
@@ -553,18 +555,9 @@ token 从 CF 控制台 **Web Analytics** → **Add** 拿到。
 
 ### 11.3 接触发器 / 定时任务
 
-CF Pages 支持 **Pages Functions**（在 `functions/` 目录写 Worker）。
-
-例：定时重新生成 sitemap：
-```js
-// functions/api/regen-sitemap.js
-export const config = { schedule: '@daily' };
-export default async function () {
-  const { execSync } = await import('node:child_process');
-  execSync('node scripts/build-sitemap.js');
-  return new Response('regenerated');
-}
-```
+⚠️ **CF Pages 免费层不支持 Cron Triggers**——定时任务需要 Workers Paid 计划（$5/月起）。
+sitemap 的"每次 HTML 变更时自动重生成"已经由上面的 GitHub Actions workflow（§11.1）覆盖。
+只有当定时刷新第三方数据（直播源刷新、外部 feed 等）才需要 cron，按需升级 Workers。
 
 ### 11.4 域名不写死：`scripts/set-domain.py`
 

@@ -1,0 +1,27 @@
+name: Regenerate sitemap
+on:
+  push:
+    paths:
+      - '**/*.html'
+      - 'articles/**/*.html'
+      - 'en/**/*.html'
+      - 'ja/**/*.html'
+      - 'ko/**/*.html'
+      - 'scripts/build-sitemap.js'
+permissions:
+  contents: write
+jobs:
+  sitemap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node scripts/build-sitemap.js
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sitemap.xml
+          git diff --cached --quiet || \
+            (git commit -m "chore: regenerate sitemap" && git push)
