@@ -547,6 +547,13 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://c.qifei2035.eu.cc/ko/terms.html"/>
   </url>
   <url>
+    <loc>https://c.qifei2035.eu.cc/LOGO.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://c.qifei2035.eu.cc/LOGO.html"/>
+  </url>
+  <url>
     <loc>https://c.qifei2035.eu.cc/privacy.html</loc>
     <lastmod>2026-09-02</lastmod>
     <changefreq>monthly</changefreq>
